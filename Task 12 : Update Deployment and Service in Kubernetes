@@ -1,0 +1,27 @@
+An application deployed on the Kubernetes cluster requires an update with new features developed by the Nautilus application development team. The existing setup includes a deployment named nginx-deployment and a service named nginx-service. Below are the necessary changes to be implemented without deleting the deployment and service:
+
+
+1.) Modify the service nodeport from 30008 to 32165
+
+2.) Change the replicas count from 1 to 5
+
+3.) Update the image from nginx:1.17 to nginx:latest
+
+---------------------------
+thor@jump-host ~$ k get service
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes      ClusterIP   10.43.0.1       <none>        443/TCP        52m
+nginx-service   NodePort    10.43.179.195   <none>        80:30008/TCP   32s
+
+thor@jump-host ~$ k edit service nginx-service
+Edit the port from 30008 to 32165
+  ports:                        
+  - nodePort: 32165   
+
+thor@jump-host ~$ k get deploy
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+nginx-deployment   1/1     1            1           2m20s
+thor@jump-host ~$ k edit deploy nginx-deployment
+update the replica count from 1 to 5
+Update the image from nginx:1.17 to nginx:latest
+
