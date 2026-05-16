@@ -1,0 +1,34 @@
+The Nautilus DevOps team has already deployed a ReplicaSet to host an application that requires a highly available infrastructure. Your task is to expose the application running in the existing ReplicaSet by creating a Kubernetes NodePort Service.
+
+Follow the specifications below to create the Service and ensure the application pods are accessible:
+
+
+A ReplicaSet named httpd-replicaset is already running in the cluster.
+
+The pods managed by the ReplicaSet use the following labels:
+Assign labels app as httpd_app, and type as front-end.
+
+Create a NodePort Service named httpd-service to expose the application.
+
+Set the NodePort to 30080.
+
+Expose port 80 of the application.
+---------------------------------------------------------------------------------------------
+
+thor@jump-host ~$ cat httpd-service.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-service
+spec:
+  type: NodePort
+  selector:
+    app: httpd_app
+    type: front-end
+  ports:
+    - port: 80
+      nodePort: 30080
+
+
+thor@jump-host ~$ k apply -f httpd-service.yaml 
+service/httpd-service created
